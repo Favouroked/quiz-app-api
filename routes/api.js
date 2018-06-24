@@ -12,26 +12,33 @@ router.get('/', function (req, res, next) {
 router.get('/get-quiz', function (req, res) {
     Quiz.find({}, (err, quiz) => {
         if (err) throw err;
-        res.json(quiz);
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+        res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+        res.setHeader('Access-Control-Allow-Credentials', true)
+        return res.status(200).json(quiz);
     });
 });
 
 router.post('/add-quiz', (req, res) => {
+    console.log(req.body);
     Quiz.create(req.body, (err, quiz) => {
         if (err) throw err;
-        res.json({success: true});
+        return res.status(200).json(quiz);
     });
 });
 
 router.get('/get-questions', (req, res) => {
     const quiz_id = req.param('id');
+    console.log('Quiz id', quiz_id);
     Question.find({quiz_id: quiz_id}, (err, questions) => {
         if (err) throw err;
-        res.json(questions);
+        res.status(200).json(questions);
     });
 });
 
 router.post('/add-questions', (req, res) => {
+    console.log(req.body);
     Question.create(req.body, (err, created) => {
         if (err) throw err;
         if (created) res.json({success: true});

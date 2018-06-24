@@ -11,7 +11,7 @@ var usersRouter = require('./routes/users');
 var apiRouter = require('./routes/api');
 
 var app = express();
-mongoose.connect('mongodb://localhost/quizApp', function(err) {
+mongoose.connect('mongodb://testuser:abc123@ds149335.mlab.com:49335/favour-quiz-app', function(err) {
   if (err) {
     console.log(err);
   }
